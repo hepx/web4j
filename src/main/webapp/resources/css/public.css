@@ -1,0 +1,11 @@
+/* Base box */
+.pub-box {
+  position: relative;
+  padding: 18px 10px 0px;
+  *padding-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}

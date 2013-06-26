@@ -31,11 +31,11 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-
+	<!-- 
 	<logger name="org.springframework.jdbc.core">
 		<level value="debug" />
 	</logger>
-
+ 	-->
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />

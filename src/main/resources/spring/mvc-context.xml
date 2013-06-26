@@ -31,6 +31,14 @@
 	<!-- 资源文件，请求此目录下的内容，不会被controller处理 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.xixi.web4j.interceptor.loginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<!-- 视图层控制-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

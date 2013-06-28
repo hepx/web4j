@@ -1,11 +1,11 @@
 package com.xixi.web4j.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +19,11 @@ public class UserInfoService {
 
 	@Autowired
 	private UserInfoDao userInfoDao;
-
+	
 	@Transactional(readOnly=true)
 	@Cacheable(value="users")
-	public List<UserInfoBean> list(Integer start,Integer limit) throws DataAccessException{
-		return this.userInfoDao.list(start,limit);
+	public List<Map<String,Object>> listMap(Integer start,Integer limit) throws DataAccessException{
+		return this.userInfoDao.listMap(start,limit);
 	}
 	
 	@Transactional(readOnly=true)

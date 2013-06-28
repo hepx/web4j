@@ -2,6 +2,8 @@ package com.xixi.web4j.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Digits;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -29,9 +31,13 @@ public class UserInfoBean implements Serializable {
 	@Email
 	private String email;
 	
+	@Digits(fraction=0,integer=11)
 	private String phone;
 	
 	private Boolean status;
+	
+	//角色
+	private Integer roleId;
 	
 	@JsonIgnore
 	public boolean isNew(){
@@ -85,5 +91,14 @@ public class UserInfoBean implements Serializable {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
 	
 }

@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Repository;
 import com.xixi.web4j.model.UserInfoBean;
 
 @Repository
-
 public class UserInfoDao{
 
 	@Autowired
@@ -34,14 +30,16 @@ public class UserInfoDao{
 	
 	private String SQL_SELECT="select userId,userName,email,phone,status from tb_userinfo";
 	
-	public List<UserInfoBean> list(Integer start,Integer limit)throws DataAccessException{
-		String sql=SQL_SELECT+" order by userId desc limit :start,:limit";
+	private String SQL_SELECT_FK="select A.userId,A.userName,A.email,A.phone,A.status,B.roleId,B.roleName from tb_userinfo A " +
+				"left join tb_role B on A.roleId=B.roleId";
+	
+	public List<Map<String,Object>> listMap(Integer start,Integer limit)throws DataAccessException{
+		String sql=SQL_SELECT_FK+" order by userId desc limit :start,:limit";
 		Map<String,Object>paramMap=new HashMap<String, Object>();
 		paramMap.put("start", start);
 		paramMap.put("limit", limit);
-		return this.NPJdbcTemplate.query(sql, paramMap, new UserInfoRowMapper());
+		return this.NPJdbcTemplate.queryForList(sql, paramMap);
 	}
-	
 	
 	public Integer count()throws DataAccessException{
 		String sql="select count(userId) as rows from tb_userinfo";
@@ -62,8 +60,8 @@ public class UserInfoDao{
 	}
 	
 	public UserInfoBean findById(Integer userId)throws DataAccessException{
-		String sql=SQL_SELECT+" where userId="+userId;
-		return this.jdbcTemplate.queryForObject(sql, new UserInfoRowMapper());
+		String sql=SQL_SELECT_FK+" where userId="+userId;
+		return this.jdbcTemplate.queryForObject(sql, new UserInfoRowMapper(true));
 	}
 	
 	public boolean isExistCurrentUser(String userName)throws DataAccessException{
@@ -82,7 +80,7 @@ public class UserInfoDao{
 			user.setUserId(newKey.intValue());
 		}else{
 			this.NPJdbcTemplate.update("update tb_userinfo set userName=:userName,email=:email,phone=:phone,status=:status" +
-					" where userId=:userId",parameterSource);
+					",roleId=:roleId where userId=:userId",parameterSource);
 		}
 	}
 	
@@ -90,7 +88,15 @@ public class UserInfoDao{
 		this.jdbcTemplate.update("delete from tb_userinfo where userId=?", userId);
 	}
 
+	
 	private class UserInfoRowMapper implements RowMapper<UserInfoBean>{
+		
+		private boolean isFetchRole=false;
+		public UserInfoRowMapper(){}
+		
+		public UserInfoRowMapper(boolean isFetchRole){
+			this.isFetchRole=isFetchRole;
+		}
 		public UserInfoBean mapRow(ResultSet re, int arg1) throws SQLException {
 			// TODO Auto-generated method stub
 			UserInfoBean user=new UserInfoBean();
@@ -99,6 +105,9 @@ public class UserInfoDao{
 			user.setEmail(re.getString("email"));
 			user.setPhone(re.getString("phone"));
 			user.setStatus(re.getBoolean("status"));
+			if(this.isFetchRole){
+				user.setRoleId(re.getInt("roleId"));
+			}
 			return user;
 		}
 	}

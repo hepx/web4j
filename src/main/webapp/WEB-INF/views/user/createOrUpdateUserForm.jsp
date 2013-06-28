@@ -25,6 +25,15 @@
 					<web4j:inputField label="联系方式" name="phone" />
 					<web4j:inputField label="邮箱地址" name="email" />
 				    <div class="control-group">
+				        <label class="control-label">角色</label>
+				        <div class="controls">
+							<form:select path="roleId">
+								<form:option value="" label="请选择" />
+								<form:options items="${roles }" itemLabel="roleName" itemValue="roleId"/>
+							</form:select>
+				        </div>
+				    </div>
+				    <div class="control-group">
 				        <label class="control-label">状态</label>
 				        <div class="controls">
 				            <label class="radio inline">

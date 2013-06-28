@@ -79,7 +79,7 @@
 							html+='<td>'+log.logTime+'</td>';
 			                html+='<td>'+log.msg+'</td>';
 			                html+='<td>';
-			                html+='<a href="<s:url value="/log/delete/'+log.logId+'" />"><i class="icon-remove"></i></a>';
+			                html+='<a title="删除" href="<s:url value="/log/delete/'+log.logId+'" />"><i class="icon-remove"></i></a>';
 			                html+='</td>';
 			                html+='</tr>';
 						});
@@ -88,15 +88,16 @@
 		            html+='</table>';
 		            $('#logTable').html(html);
 		            createLogPagerBar(maxPage);
-		    		$('.icon-remove').parent().click(function(e){
-		    			var a=$(this);
-		    			$.get(a.attr('href'),function(data){
-		    				if(data==='success'){
-		    					a.parent('td').parent('tr').remove();
-		    				}
-		    			});
-		    			return false;
-		    		});
+		          	//表格中的删除事件
+		            $('td > a >i[class=icon-remove]').parent().click(function(e){
+		            	var a=$(this);
+		            	$.get(a.attr('href'),function(data){
+		            		if(data==='success'){
+		            			a.parent('td').parent('tr').remove();
+		            		}
+		            	});
+		            	return false;
+		            });
 	        	}).fail(function(jqXHR, textStatus, errorThrown){
 	        		alert("出错了"+textStatus+","+errorThrown);
 	        	});

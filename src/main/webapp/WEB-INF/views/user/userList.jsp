@@ -45,6 +45,7 @@
 		            html+='<tr>';
 		            html+='<th>#</th>';
 		            html+='<th>用户名</th>';
+		            html+='<th>角色</th>';
 		            html+='<th>邮箱地址</th>';
 		            html+='<th>联系方式</th>';
 		            html+='<th>状态</th>';
@@ -59,13 +60,14 @@
 		              		html+='<tr>';
 		              		html+='<td>'+(i+1)+'</td>';
 		              		html+='<td>'+userInfo.userName+'</td>';
+		              		html+='<td>'+userInfo.roleName+'</td>';
 		              		html+='<td>'+userInfo.email+'</td>';
 		              		html+='<td>'+userInfo.phone+'</td>';
 		              		html+='<td>'+(userInfo.status==true?'<span class="badge badge-success">启用</span>':
 		              			'<span class="badge badge-important">禁用</span')+'</td>';
 		              		html+='<td>';
-		              		html+='<a href="<s:url value="/user/update/'+userInfo.userId+'" />"><i class="icon-pencil"></i></a> ';
-		              		html+='<a href="<s:url value="/user/delete/'+userInfo.userId+'" />"><i class="icon-remove"></i></a>';
+		              		html+='<a title="修改" href="<s:url value="/user/update/'+userInfo.userId+'" />"><i class="icon-pencil"></i></a> ';
+		              		html+='<a title="删除" href="<s:url value="/user/delete/'+userInfo.userId+'" />"><i class="icon-remove"></i></a>';
 		              		html+='</td>';
 		              		html+='</tr>';
 						});

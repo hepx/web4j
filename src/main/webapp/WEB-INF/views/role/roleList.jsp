@@ -25,7 +25,7 @@
 								<th>角色名</th>
 								<th>角色代码</th>
 								<th>描述</th>
-								<th style="width: 36px;"></th>
+								<th style="width: 54px;"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -36,8 +36,9 @@
 									<td>${role.roleCode }</td>
 									<td>${role.roleDesc }</td>
 									<td>
-										<a href='<s:url value="/role/update/${role.roleId }" />'><i class="icon-pencil"></i></a> 
-										<a href='<s:url value="/role/delete/${role.roleId }" />'><i class="icon-remove"></i></a>
+										<a title="修改" href='<s:url value="/role/update/${role.roleId }" />'><i class="icon-pencil"></i></a> 
+										<a title="删除" href='<s:url value="/role/delete/${role.roleId }" />'><i class="icon-remove"></i></a> 
+										<a title="权限管理" href="#"><i class="icon-lock"></i></a>
 									</td>
 								</tr>
 							</c:forEach>

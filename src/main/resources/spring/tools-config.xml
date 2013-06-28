@@ -23,6 +23,9 @@
     			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
     				<property name="name" value="total" />
     			</bean>
+    			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+    				<property name="name" value="roles" />
+    			</bean>
     		</set>
     	</property>
     </bean>

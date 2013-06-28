@@ -69,8 +69,8 @@
 		              		html+='<td>'+module.moduleUrl+'</td>';
 		              		html+='<td>'+module.sort+'</td>';
 		              		html+='<td>';
-		              		html+='<a href="<s:url value="/module/update/'+module.moduleId+'" />"><i class="icon-pencil"></i></a> ';
-		              		html+='<a href="<s:url value="/module/delete/'+module.moduleId+'" />"><i class="icon-remove"></i></a>';
+		              		html+='<a title="修改" href="<s:url value="/module/update/'+module.moduleId+'" />"><i class="icon-pencil"></i></a> ';
+		              		html+='<a title="删除" href="<s:url value="/module/delete/'+module.moduleId+'" />"><i class="icon-remove"></i></a>';
 		              		html+='</td>';
 		              		html+='</tr>';
 		            	});

@@ -18,13 +18,10 @@
     	<property name="caches">
     		<set>
     			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-    				<property name="name" value="users" />
-    			</bean>
-    			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-    				<property name="name" value="total" />
-    			</bean>
-    			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
     				<property name="name" value="roles" />
+    			</bean>
+    			<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+    				<property name="name" value="moduleMap" />
     			</bean>
     		</set>
     	</property>

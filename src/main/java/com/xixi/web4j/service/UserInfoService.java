@@ -21,13 +21,11 @@ public class UserInfoService {
 	private UserInfoDao userInfoDao;
 	
 	@Transactional(readOnly=true)
-	@Cacheable(value="users")
 	public List<Map<String,Object>> listMap(Integer start,Integer limit) throws DataAccessException{
 		return this.userInfoDao.listMap(start,limit);
 	}
 	
 	@Transactional(readOnly=true)
-	@Cacheable(value="total")
 	public Integer count()throws DataAccessException{
 		return this.userInfoDao.count();
 	}

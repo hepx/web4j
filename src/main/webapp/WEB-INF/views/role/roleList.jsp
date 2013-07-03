@@ -38,12 +38,28 @@
 									<td>
 										<a title="修改" href='<s:url value="/role/update/${role.roleId }" />'><i class="icon-pencil"></i></a> 
 										<a title="删除" href='<s:url value="/role/delete/${role.roleId }" />'><i class="icon-remove"></i></a> 
-										<a title="权限管理" href="#"><i class="icon-lock"></i></a>
+										<!-- 
+										<a title="权限管理" href="#authModal" role="button" data-toggle="modal"><i class="icon-lock"></i></a>
+										 -->
+										 <a title="权限管理" href="#" onclick="authMgr(${role.roleId })"><i class="icon-lock"></i></a>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
+				<!-- Modal -->
+				<div id="authModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				    	<h3 id="myModalLabel">权限管理</h3>
+				  	</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+					    <button id="saveRole" class="btn btn-primary">保存</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -58,6 +74,56 @@
 			});
 			return false;
 		});
+		$('#saveRole').click(function(){
+			//alert($('#authForm').serialize());
+			$.post('${pageContext.request.contextPath}/auth/saveAuth',$('#authForm').serialize())
+			.done(function(data){
+				if(data==='success'){
+					alert("保存成功！");
+					$('#authModal').modal('hide');
+				}else{
+					$('#authForm').prepend($('<div class="alert alert-error">'+
+							'<a class="close" data-dismiss="alert" href="#">&times;</a>'+data+'</div>'));
+				}			
+			});
+		});
+		function authMgr(roleId){
+			$.getJSON('${pageContext.request.contextPath}/auth/queryAuth',{roleId:roleId})
+			.done(function(data) {
+				var modules=data.modules;
+				var moduleIds=data.moduleIds;
+				if(modules){
+					var html='';
+					html+='<form id="authForm" class="form-inline" >';
+					html+='<input type="hidden" name="roleId" value="'+roleId+'">';
+					$.each(modules,function(i,module){
+						html+='<div class="controls">';
+						html+='<label class="checkbox">';
+						html+='<input type="checkbox" name="moduleIds" value="'+module.moduleId+'">'+module.moduleName;
+						html+='</label>';
+						html+='</div>';
+						html+='<hr>';
+						if(module.subModules){
+							html+='<div class="controls" style="padding-left: 30px;">';
+							$.each(module.subModules,function(y,subModule){
+								html+='<label class="checkbox inline">';
+								html+='<input type="checkbox" name="moduleIds" value="'+subModule.moduleId+'">'+subModule.moduleName;
+								html+='</label> ';
+							});
+							html+='</div>';
+						}
+					});
+					html+='</form>';
+					$('.modal-body').html(html);
+					$('#authModal').modal('show');
+					$('#authModal').on('shown',function(){
+						$('input[name=moduleIds]').val(moduleIds);
+					});
+				}
+			}).fail(function(jqxhr, textStatus, error) {
+				alert("出错了"+textStatus+","+error);
+			});
+		}
 	</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.xixi.web4j.repository.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,10 +29,24 @@ public class ModuleDao {
 	
 	private String SQL_SELECT="select moduleId,moduleCode,moduleDesc,moduleName,parentCode,moduleIcon,moduleUrl,sort from tb_module";
 	
+	private String SQL_MAP="select moduleId,moduleName,moduleCode from tb_module";
+	
 	public List<ModuleBean> list(Integer start,Integer limit)throws DataAccessException{
 		String sql=SQL_SELECT+" order by moduleId desc";
 		sql+=" limit "+start+","+limit;
 		return this.jdbcTemplate.query(sql,new ModuleRowMapper());
+	}
+	
+	public List<Map<String,Object>>list()throws DataAccessException{
+		String sqlone=SQL_MAP+" where parentCode is null or parentCode='' order by sort";
+		String sqltwo=SQL_MAP+" where parentCode=? order by sort";
+		List<Map<String,Object>> modules=this.jdbcTemplate.queryForList(sqlone);
+		for(Map<String,Object> map:modules){
+			String moduleCode=(String)map.get("moduleCode");
+			List<Map<String,Object>> subModules=this.jdbcTemplate.queryForList(sqltwo, moduleCode);
+			map.put("subModules", subModules);
+		}
+		return modules;
 	}
 	
 	public ModuleBean findById(Integer moduleId)throws DataAccessException{
@@ -59,7 +74,7 @@ public class ModuleDao {
 		String twoLeveSql=SQL_SELECT+" where parentCode=? order by sort";
 		return this.jdbcTemplate.query(twoLeveSql, new ModuleRowMapper(), parentCode);
 	}
-	
+		
 	public void saveOrUpdate(ModuleBean module)throws DataAccessException{
 		BeanPropertySqlParameterSource parameterSource=new BeanPropertySqlParameterSource(module);
 		if(module.isNew()){
@@ -94,6 +109,5 @@ public class ModuleDao {
 			module.setSort(rs.getInt("sort"));
 			return module;
 		}
-		
 	}
 }

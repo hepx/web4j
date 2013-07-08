@@ -3,6 +3,7 @@ package com.xixi.web4j.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,21 +33,23 @@ public class ModuleService {
 	}
 	
 	@Transactional(readOnly=true)
-	public List<ModuleBean> listOneLevelMenu()throws DataAccessException{
-		return this.moduleDao.listOneLevelMenu();
+	public List<ModuleBean> listOneLevelMenu(Integer roleId)throws DataAccessException{
+		return this.moduleDao.listOneLevelMenu(roleId);
 	}
 	
 	@Transactional(readOnly=true)
-	public List<ModuleBean> listTwoLevelMenu(String parentCode)throws DataAccessException{
-		return this.moduleDao.listTwoLevelMenu(parentCode);
+	public List<ModuleBean> listTwoLevelMenu(Integer roleId,String parentCode)throws DataAccessException{
+		return this.moduleDao.listTwoLevelMenu(roleId,parentCode);
 	}
 	
 	@Transactional
+	@CacheEvict(value="moduleMap",allEntries=true)
 	public void saveOrUpdate(ModuleBean moduleBean)throws DataAccessException{
 		this.moduleDao.saveOrUpdate(moduleBean);
 	}
 	
 	@Transactional
+	@CacheEvict(value="moduleMap",allEntries=true)
 	public void deleteById(Integer moduleId)throws DataAccessException{
 		this.moduleDao.deleteById(moduleId);
 	}

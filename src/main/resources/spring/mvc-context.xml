@@ -38,7 +38,7 @@
 			<bean class="com.xixi.web4j.interceptor.loginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 	<!-- 视图层控制-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
@@ -58,8 +58,20 @@
 	</bean>
 	
 	<!--系统异常处理 -->
+	<!-- 
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="defaultErrorView" value="exception" />
 		<property name="warnLogCategory" value="error"></property>
 	</bean>
+	 -->
+	 <bean class="com.xixi.web4j.exception.CustomSimpleExceptionResolver">
+	 	<!-- ajax exception -->
+	 	<property name="ajaxErrorView" value="ajaxException" />
+	 	<property name="ajaxDefaultErrorMessage" value="发生系统未知异常!" />
+	 	<property name="ajaxShowTechMessage" value="false" />
+	 	
+	 	<!-- std exception -->
+	 	<property name="defaultErrorView" value="exception" />
+	 	<property name="warnLogCategory" value="error" />
+	 </bean>
 </beans>

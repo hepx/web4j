@@ -52,6 +52,8 @@ public class LogAction {
 	
 	@RequestMapping(value="delete/{logId}")
 	public @ResponseBody String delete(@PathVariable("logId")Integer logId){
+		String s=null;
+		s.toString();
 		logService.deleteById(logId);
 		return "success";
 	}

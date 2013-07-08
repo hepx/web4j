@@ -28,7 +28,7 @@ public class UserInfoDao{
 	
 	private SimpleJdbcInsert insertUser;
 	
-	private String SQL_SELECT="select userId,userName,email,phone,status from tb_userinfo";
+	//private String SQL_SELECT="select userId,userName,email,phone,status from tb_userinfo";
 	
 	private String SQL_SELECT_FK="select A.userId,A.userName,A.email,A.phone,A.status,B.roleId,B.roleName from tb_userinfo A " +
 				"left join tb_role B on A.roleId=B.roleId";
@@ -47,11 +47,11 @@ public class UserInfoDao{
 	}
 	
 	public UserInfoBean find(String userName,String password)throws DataAccessException{
-		String sql=SQL_SELECT+" where userName=:userName and password=:password";
+		String sql=SQL_SELECT_FK+" where A.userName=:userName and A.password=:password";
 		Map<String,Object>paramMap=new HashMap<String,Object>();
 		paramMap.put("userName", userName);
 		paramMap.put("password", password);
-		List<UserInfoBean> users= this.NPJdbcTemplate.query(sql, paramMap,new UserInfoRowMapper());
+		List<UserInfoBean> users= this.NPJdbcTemplate.query(sql, paramMap,new UserInfoRowMapper(true));
 		if(users!=null&&users.size()>0){
 			return users.get(0);
 		}else{
@@ -84,15 +84,19 @@ public class UserInfoDao{
 		}
 	}
 	
+	public void modifyPwd(Integer userId,String newPwd)throws DataAccessException{
+		String uppwd_sql="update tb_userinfo set password=? where userId=?";
+		this.jdbcTemplate.update(uppwd_sql, newPwd,userId);
+	}
+	
 	public void deleteById(Integer userId)throws DataAccessException{
 		this.jdbcTemplate.update("delete from tb_userinfo where userId=?", userId);
 	}
-
 	
 	private class UserInfoRowMapper implements RowMapper<UserInfoBean>{
 		
 		private boolean isFetchRole=false;
-		public UserInfoRowMapper(){}
+		//public UserInfoRowMapper(){}
 		
 		public UserInfoRowMapper(boolean isFetchRole){
 			this.isFetchRole=isFetchRole;

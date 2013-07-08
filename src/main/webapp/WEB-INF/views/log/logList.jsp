@@ -29,6 +29,7 @@
 				    <a href="#" class="next" data-action="next">&rsaquo;</a>
 				    <a href="#" class="last" data-action="last">&raquo;</a>
 				</div>
+				<div class='notifications top-right'></div>
 	      	</div>
 		</div>
 	</div>
@@ -91,15 +92,16 @@
 		          	//表格中的删除事件
 		            $('td > a >i[class=icon-remove]').parent().click(function(e){
 		            	var a=$(this);
-		            	$.get(a.attr('href'),function(data){
-		            		if(data==='success'){
-		            			a.parent('td').parent('tr').remove();
-		            		}
+		            	$.get(a.attr('href')).done(function(data){
+		            		a.parent('td').parent('tr').remove();
+		            		$('.top-right').notify({ message: '删除成功！', type: 'success'}).show();
+		            	}).fail(function(data){
+		            		$('.top-right').notify({ message: data.responseText, type: 'danger'}).show();
 		            	});
 		            	return false;
 		            });
 	        	}).fail(function(jqXHR, textStatus, errorThrown){
-	        		alert("出错了"+textStatus+","+errorThrown);
+	        		$('.top-right').notify({ message: '错误：'+textStatus+" "+errorThrown, type: 'danger'}).show();
 	        	});
 	        }
 		});

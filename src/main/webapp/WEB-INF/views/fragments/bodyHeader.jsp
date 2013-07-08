@@ -32,9 +32,9 @@
 					    <li class="dropdown">
 					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, ${loginUser.userName } <b class="caret"></b></a>
 	                        <ul class="dropdown-menu">
-	                            <li><a href="/user/preferences"><i class="icon-cog"></i>设置</a></li>
+	                            <li><a href='<s:url value="/user/modifyPwd" />'><i class="icon-edit"></i> 修改密码</a></li>
 	                            <li class="divider"></li>
-	                            <li><a href='<s:url value="/quit"/>'><i class="icon-off"></i>退出</a></li>
+	                            <li><a href='<s:url value="/quit"/>'><i class="icon-off"></i> 退出</a></li>
 	                        </ul>
                     	</li>
 					</ul>

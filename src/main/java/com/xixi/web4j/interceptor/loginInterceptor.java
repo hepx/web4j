@@ -1,12 +1,8 @@
 package com.xixi.web4j.interceptor;
 
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ser.FilterProvider;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.xixi.web4j.model.UserInfoBean;

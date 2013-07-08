@@ -38,10 +38,7 @@
 									<td>
 										<a title="修改" href='<s:url value="/role/update/${role.roleId }" />'><i class="icon-pencil"></i></a> 
 										<a title="删除" href='<s:url value="/role/delete/${role.roleId }" />'><i class="icon-remove"></i></a> 
-										<!-- 
-										<a title="权限管理" href="#authModal" role="button" data-toggle="modal"><i class="icon-lock"></i></a>
-										 -->
-										 <a title="权限管理" href="#" onclick="authMgr(${role.roleId })"><i class="icon-lock"></i></a>
+										<a title="权限管理" href="#" onclick="authMgr(${role.roleId })"><i class="icon-lock"></i></a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -61,30 +58,28 @@
 					    <button id="saveRole" class="btn btn-primary">保存</button>
 					</div>
 				</div>
+				<div class='notifications top-right'></div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		$('.icon-remove').parent().click(function(e){
 			var a=$(this);
-			$.get(a.attr('href'),function(data){
-				if(data==='success'){
-					a.parent('td').parent('tr').remove();
-				}
-			});
+        	$.get(a.attr('href')).done(function(data){
+        		a.parent('td').parent('tr').remove();
+        		$('.top-right').notify({ message: '删除成功！', type: 'success'}).show();
+        	}).fail(function(data){
+        		$('.top-right').notify({ message: data.responseText, type: 'danger'}).show();
+        	});
 			return false;
 		});
 		$('#saveRole').click(function(){
-			//alert($('#authForm').serialize());
 			$.post('${pageContext.request.contextPath}/auth/saveAuth',$('#authForm').serialize())
 			.done(function(data){
-				if(data==='success'){
-					alert("保存成功！");
-					$('#authModal').modal('hide');
-				}else{
-					$('#authForm').prepend($('<div class="alert alert-error">'+
-							'<a class="close" data-dismiss="alert" href="#">&times;</a>'+data+'</div>'));
-				}			
+				$('#authModal').modal('hide');
+				$('.top-right').notify({ message: '保存成功！', type: 'success'}).show();
+			}).fail(function(data){
+				$('.top-right').notify({ message: data.responseText, type: 'danger'}).show();
 			});
 		});
 		function authMgr(roleId){
@@ -121,7 +116,7 @@
 					});
 				}
 			}).fail(function(jqxhr, textStatus, error) {
-				alert("出错了"+textStatus+","+error);
+				$('.top-right').notify({ message: '错误：'+textStatus+" "+error, type: 'danger'}).show();
 			});
 		}
 	</script>

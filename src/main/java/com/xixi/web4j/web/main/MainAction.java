@@ -58,15 +58,16 @@ public class MainAction {
 	    	ip=request.getHeader("x-forwarded-for");
 	    }
 		logService.add(new LogInfo(loginUser.getUserName(), "用户登录("+ip+")"));
-		List<ModuleBean> navMenus=moduleService.listOneLevelMenu();
+		List<ModuleBean> navMenus=moduleService.listOneLevelMenu(loginUser.getRoleId());
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("navMenus", navMenus);
 		return "main/home";
 	}
 	
 	@RequestMapping(value="/navModule",method=RequestMethod.GET)
-	public String navModule(@RequestParam String moduleCode,Model model){
-		List<ModuleBean> leftMenus=moduleService.listTwoLevelMenu(moduleCode);
+	public String navModule(@RequestParam String moduleCode,
+			@ModelAttribute("loginUser")UserInfoBean loginUser,Model model){
+		List<ModuleBean> leftMenus=moduleService.listTwoLevelMenu(loginUser.getRoleId(),moduleCode);
 		model.addAttribute("leftMenus",leftMenus);
 		return "main/main";
 	}

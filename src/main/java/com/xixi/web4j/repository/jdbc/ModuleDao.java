@@ -27,7 +27,8 @@ public class ModuleDao {
 	
 	private SimpleJdbcInsert moduleInsert;
 	
-	private String SQL_SELECT="select moduleId,moduleCode,moduleDesc,moduleName,parentCode,moduleIcon,moduleUrl,sort from tb_module";
+	private String SQL_SELECT="select A.moduleId,A.moduleCode,A.moduleDesc,A.moduleName," +
+			"A.parentCode,A.moduleIcon,A.moduleUrl,A.sort from tb_module A";
 	
 	private String SQL_MAP="select moduleId,moduleName,moduleCode from tb_module";
 	
@@ -65,14 +66,16 @@ public class ModuleDao {
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 	
-	public List<ModuleBean> listOneLevelMenu()throws DataAccessException{
-		String oneLeveSql=SQL_SELECT+" where parentCode is null or parentCode='' order by sort";
-		return this.jdbcTemplate.query(oneLeveSql, new ModuleRowMapper());
+	public List<ModuleBean> listOneLevelMenu(Integer roleId)throws DataAccessException{
+		String oneLeveSql=SQL_SELECT+" inner join tb_auth B on A.moduleId=B.moduleId " +
+				"where (A.parentCode is null or A.parentCode='') and B.roleId=? order by A.sort";
+		return this.jdbcTemplate.query(oneLeveSql, new ModuleRowMapper(),roleId);
 	}
 	
-	public List<ModuleBean>listTwoLevelMenu(String parentCode)throws DataAccessException{
-		String twoLeveSql=SQL_SELECT+" where parentCode=? order by sort";
-		return this.jdbcTemplate.query(twoLeveSql, new ModuleRowMapper(), parentCode);
+	public List<ModuleBean>listTwoLevelMenu(Integer roleId,String parentCode)throws DataAccessException{
+		String twoLeveSql=SQL_SELECT+" inner join tb_auth B on A.moduleId=B.moduleId " +
+				"where B.roleId=? and A.parentCode=? order by A.sort";
+		return this.jdbcTemplate.query(twoLeveSql, new ModuleRowMapper(), roleId,parentCode);
 	}
 		
 	public void saveOrUpdate(ModuleBean module)throws DataAccessException{

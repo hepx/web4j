@@ -25,6 +25,7 @@ public class UserInfoBean implements Serializable {
 	@NotEmpty
 	private String userName;
 	
+	@JsonIgnore
 	@Length(min=6,max=16)
 	private String password;
 	
@@ -38,6 +39,10 @@ public class UserInfoBean implements Serializable {
 	
 	//角色
 	private Integer roleId;
+	
+	@JsonIgnore
+	@Length(min=6,max=16)
+	private String newPwd;
 	
 	@JsonIgnore
 	public boolean isNew(){
@@ -98,6 +103,14 @@ public class UserInfoBean implements Serializable {
 
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
 	}
 
 	

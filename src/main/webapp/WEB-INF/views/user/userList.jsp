@@ -25,6 +25,7 @@
 				    <a href="#" class="next" data-action="next">&rsaquo;</a>
 				    <a href="#" class="last" data-action="last">&raquo;</a>
 				</div>
+				<div class='notifications top-right'></div>
 	      	</div>
 		</div>
 	</div>
@@ -79,15 +80,16 @@
 		            //remove 
 		    		$('.icon-remove').parent().click(function(e){
 		    			var a=$(this);
-		    			$.get(a.attr('href'),function(data){
-		    				if(data==='success'){
-		    					a.parent('td').parent('tr').remove();
-		    				}
-		    			});
+		            	$.get(a.attr('href')).done(function(data){
+		            		a.parent('td').parent('tr').remove();
+		            		$('.top-right').notify({ message: '删除成功！', type: 'success'}).show();
+		            	}).fail(function(data){
+		            		$('.top-right').notify({ message: data.responseText, type: 'danger'}).show();
+		            	});
 		    			return false;
 		    		});
 				}).fail(function(jqXHR,textStatus,error){
-					alert("出错了"+textStatus+","+error);
+					$('.top-right').notify({ message: '错误：'+textStatus+" "+error, type: 'danger'}).show();
 				});
 			}
 			//创建翻页组件

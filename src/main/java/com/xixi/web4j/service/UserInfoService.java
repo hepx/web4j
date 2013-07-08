@@ -41,13 +41,16 @@ public class UserInfoService {
 	}
 	
 	@Transactional
-	@CacheEvict(value="users",allEntries=true)
 	public void saveOrUpdate(UserInfoBean user)throws DataAccessException{
 		this.userInfoDao.saveOrUpdate(user);
 	}
+
+	@Transactional
+	public void modifyPwd(Integer userId,String newPwd)throws DataAccessException{
+		this.userInfoDao.modifyPwd(userId, newPwd);
+	}
 	
 	@Transactional
-	@CacheEvict(value="users",allEntries=true)
 	public void deleteById(Integer userId)throws DataAccessException{
 		this.userInfoDao.deleteById(userId);
 	}

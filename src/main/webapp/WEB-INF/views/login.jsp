@@ -8,7 +8,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WEB4J</title>
-    <link href='<s:url value="/resources/css/bootstrap.min.css"/>' rel="stylesheet"/>
+    <link href='<s:url value="/resources/bootstrap/css/bootstrap.css"/>' rel="stylesheet"/>
     <style type="text/css">
       body {
         padding-top: 40px;

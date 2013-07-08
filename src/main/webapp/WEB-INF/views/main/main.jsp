@@ -14,5 +14,11 @@
 	      	</div>
 		</div>
 	</div>
+	<jsp:include page="../fragments/footer.jsp"></jsp:include>
+	<script type="text/javascript">
+		$(function(){
+			$("a[href='"+(location.pathname+location.search)+"']").parent().addClass('active');
+		});
+	</script>
 </body>
 </html>

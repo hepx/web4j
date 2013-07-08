@@ -2,7 +2,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Header 主体 -->
-  
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
@@ -11,14 +10,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="brand" href="#">WEB4J</a>
 			<div class="nav-collapse collapse">
-				<ul class="nav">
+				<ul id="topMenu" class="nav">
+					<li><a class="brand" href="#">WEB4J</a></li>
 					<li class="divider-vertical"></li>
                   	<li><a href='<s:url value="/home" />'><i class="icon-home icon-white"></i> 主页</a></li>
 					<li class="divider-vertical"></li>
 					<c:forEach var="module" items="${navMenus}">
-						<li><a
+						<li><a 
 							href='<s:url value="/navModule?moduleCode=${module.moduleCode }" />'>
 								<c:if test="${not empty module.moduleIcon }">
 									<i class="${module.moduleIcon } icon-white"></i>

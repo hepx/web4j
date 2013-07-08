@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<jsp:include page="../fragments/headerTag.jsp"></jsp:include>
-<body>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
 	<jsp:include page="../fragments/bodyHeader.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
@@ -62,7 +62,11 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../fragments/footer.jsp"></jsp:include>
 	<script type="text/javascript">
+		$(function(){
+			$("a[href='"+(location.pathname+location.search)+"']").parent().addClass('active');
+		});
 		$('.icon-remove').parent().click(function(e){
 			var a=$(this);
         	$.get(a.attr('href')).done(function(data){

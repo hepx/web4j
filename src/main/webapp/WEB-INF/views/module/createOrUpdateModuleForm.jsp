@@ -11,8 +11,7 @@
 	<jsp:include page="../fragments/bodyHeader.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<jsp:include page="../fragments/menu.jsp"></jsp:include>
-			<div class="span9">
+			<div class="span9 offset3">
 				<c:set var="headerName" value="${module['new']? '创建新模块':'更新模块' }"></c:set>
 				<div class="page-header">
 					<h3>${headerName } </h3>

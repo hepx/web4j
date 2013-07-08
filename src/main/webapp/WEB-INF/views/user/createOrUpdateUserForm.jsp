@@ -11,8 +11,7 @@
 	<jsp:include page="../fragments/bodyHeader.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<jsp:include page="../fragments/menu.jsp"></jsp:include>
-			<div class="span9">
+			<div class="span9 offset3">
 				<c:set var="headerName" value="${user['new']? '创建新用户':'更新用户' }"></c:set>
 				<div class="page-header">
 					<h3>${headerName } </h3>
@@ -55,7 +54,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		//var isnew=${user['new']};
 		$(function(){
 			if(${user['new']}){
 				$('input:radio[name=status]')[0].checked = true;

@@ -2,10 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ page session="false"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="../fragments/headerTag.jsp"></jsp:include>
-<body>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
 	<jsp:include page="../fragments/bodyHeader.jsp"></jsp:include>
 	<div class="container">
 		<div class="hero-unit">
@@ -22,5 +23,11 @@
 			</ul>
 		</div>
 	</div>
+	<jsp:include page="../fragments/footer.jsp"></jsp:include>
+	<script type="text/javascript">
+		$(function(){
+			$("a[href='"+window.location.pathname+"']").parent().addClass('active');
+		});
+	</script>
 </body>
 </html>

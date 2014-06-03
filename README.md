@@ -1,6 +1,6 @@
 web4j
 =====
-系统采用SpringMVC、SPRING-Jdbc、Jquery、Bootstrap开发
+系统采用SpringMVC、Spring-JDBC、Jquery、Bootstrap开发
 
 系统特点：
 
@@ -10,6 +10,6 @@ web4j
 
 增加cache
 
-采用SPRING验证
+采用Spring验证
 
 全局JSON转换
